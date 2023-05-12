@@ -33,9 +33,8 @@ class HTTPClientImpl:
         response = {}
         if pack_data:
             data = {"data": data}
-        print(json.dumps(data))
         async with aiohttp.ClientSession() as client:
-            async with client.post(url, headers=headers, data=data) as resp:
+            async with client.post(url, headers=headers, json=data) as resp:
                 response["text"] = await resp.text()
                 response["status"] = resp.status
         return response
