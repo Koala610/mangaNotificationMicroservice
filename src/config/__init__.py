@@ -1,5 +1,7 @@
 import sys
 import os
+
+from datetime import datetime
   
 current = os.path.dirname(os.path.realpath(__file__))
 parent_directory = os.path.dirname(current)
@@ -24,5 +26,6 @@ DSN = f"mysql+pymysql://{USERNAME}:{PASSWORD}@{HOST}:{PORT}/{DATABASE}?charset=u
 
 REQUEST_WAITING_TIME = int(os.getenv("REQUEST_WAITING_TIME"))
 UPDATE_FREQUENCY = int(os.getenv("UPDATE_FREQUENCY"))
+LAST_UPDATED = datetime.now()
 
 BOT_API_URL = os.getenv("BOT_API_URL")
