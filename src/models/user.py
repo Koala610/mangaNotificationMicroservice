@@ -30,4 +30,4 @@ class Admin(Base):
         UniqueConstraint('username'),
     )
 
-    user = relationship('User', foreign_keys=[user_id])
+    user: User = relationship('User', foreign_keys=[user_id])

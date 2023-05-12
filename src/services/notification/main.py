@@ -17,8 +17,10 @@ class NotificationService:
             if h is None:
                 logger.error(f"Hash wasn'y accepted for user {user.id}")
                 return
-            logger.debug(f"{h} hash for user {user.id} bookmarks")
+            logger.info(f"{h} hash for user {user.id} bookmarks")
+            logger.info(f"{user.bookmarks_hash} current hash")
             if h != user.bookmarks_hash:
+                logger.info(f"Updating user {user.id}")
                 user_repository.update(user.id, bookmarks_hash=h)
                 request_data: dict = {"message" : "Что-то изменилось у вас в закладках..."}
                 request_data["user_id"] = user.id
