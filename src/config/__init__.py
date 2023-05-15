@@ -29,3 +29,6 @@ UPDATE_FREQUENCY = int(os.getenv("UPDATE_FREQUENCY"))
 LAST_UPDATED = datetime.now()
 
 BOT_API_URL = os.getenv("BOT_API_URL")
+
+ADMIN_USERNAME = os.getenv("ADMIN_USERNAME")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD")

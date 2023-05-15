@@ -11,7 +11,7 @@ class ApiService(Protocol):
 
     async def get_bookmarks_hash(self) -> dict: ...
 
-    async def send_message(self, data: dict) -> dict: ...
+    async def send_message(self, user_id, data: dict) -> dict: ...
 
 class BotApiService:
 
@@ -23,11 +23,10 @@ class BotApiService:
         await self.set_access_token_if_invalid()
         return await self.http_client.get(f"{BOT_API_URL}/{id}/bookmarks/hash", headers={"Authorization": f"Bearer {self.access_token}"})
 
-    async def send_message(self, data: dict) -> dict:
+    async def send_message(self, user_id, data: dict) -> dict:
         await self.set_access_token_if_invalid()
-        logger.info("sending message")
-        #TODO
-        return await self.http_client.post(f"{BOT_API_URL}/notify/{}", data = data, headers={"Authorization": f"Bearer {self.access_token}"})
+        logger.info(f"sending message to user {user_id}")
+        return await self.http_client.post(f"{BOT_API_URL}/notify/{user_id}", data = data, headers={"Authorization": f"Bearer {self.access_token}"}, pack_data = True)
 
     async def verify_access_token(self, access_token):
         return await self.http_client.post(f"{BOT_API_URL}/verify-jwt", data = {"access_token": access_token})
