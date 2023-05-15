@@ -1,7 +1,7 @@
 import asyncio
+import config
 
 from ..notification import notification_service
-from src.config import UPDATE_FREQUENCY
 from src.logger import logger
 
 def set_frequency(frequency: int):
@@ -14,7 +14,9 @@ def set_frequency(frequency: int):
         return wrapper
     return decorator
 
-@set_frequency(UPDATE_FREQUENCY)
+@set_frequency(config.UPDATE_FREQUENCY)
 async def notification_task():
-    logger.info("Sending updates...")
-    await notification_service.send_updates()
+    if config.IS_NOTIFICATION_WORKING:
+        logger.info("Sending updates...")
+        await notification_service.send_updates()
+    await asyncio.sleep(1)
