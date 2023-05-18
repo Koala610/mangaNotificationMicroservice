@@ -66,3 +66,7 @@ class CRUDRepository:
         if invalid_keys:
             raise ValueError(f'Invalid keys: {invalid_keys}')
         return valid_keys
+
+    def find_in_range(self, offset, limit):
+        with self.Session() as session:
+            return session.query(self.Object).offset(offset).limit(limit).all()
