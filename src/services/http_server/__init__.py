@@ -20,7 +20,6 @@ app.include_router(notification_router)
 
 @app.middleware("http")
 async def set_trusted_addresses(request: fastapi.Request, call_next):
-    print(trusted_hosts)
     if request.client.host not in trusted_hosts:
         return fastapi.responses.PlainTextResponse("Forbidden", status_code=403)
     return await call_next(request)
