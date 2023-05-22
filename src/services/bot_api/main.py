@@ -35,12 +35,17 @@ class BotApiService:
         return await self.http_client.post(f"{BOT_API_URL}/login", data = {"username": username, "password": password})
 
     async def set_access_token_if_invalid(self):
-        is_access_token_valid = await self.verify_access_token(self.access_token)
-        is_access_token_valid = bool(json.loads(is_access_token_valid.get("text")).get("result"))
-        current_token = admin_repository.find_by_username_and_password(ADMIN_USERNAME, ADMIN_PASSWORD).actual_jwt
-        if not is_access_token_valid or self.access_token != current_token:
+        is_access_token_valid = await self.verify_inside_access_token()
+        if not is_access_token_valid:
+            self.access_token = admin_repository.find_by_username_and_password(ADMIN_USERNAME, ADMIN_PASSWORD).actual_jwt
+            is_access_token_valid = await self.verify_inside_access_token()
+        if not is_access_token_valid:
             tmp = await self.auth(ADMIN_USERNAME, ADMIN_PASSWORD)
             self.access_token = json.loads(tmp.get("text")).get("access_token")
+
+    async def verify_inside_access_token(self)-> bool:
+        is_access_token_valid = await self.verify_access_token(self.access_token)
+        return bool(json.loads(is_access_token_valid.get("text")).get("result"))
 
 async def main():
     pass
