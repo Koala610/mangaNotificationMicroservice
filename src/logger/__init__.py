@@ -1,5 +1,5 @@
-import logging as logger
 from datetime import datetime, timezone
+from core_logger import logger
 
 cur_time = datetime.now(timezone.utc).astimezone()
 cur_time = datetime.strftime(cur_time, '%z')

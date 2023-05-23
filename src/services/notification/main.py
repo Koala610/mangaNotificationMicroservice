@@ -1,5 +1,5 @@
 from src.logger import logger
-from src.models.user import User
+from core_entity.user import User
 from typing import List
 from src.repositories import user_repository
 from src.services.bot_api import ApiService
